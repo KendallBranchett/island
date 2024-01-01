@@ -1,6 +1,6 @@
 import { classicBeh } from "../classic-beh";
 
-const mMgr = wx.getBackgroundAudioManager()
+const mMgr = wx.getBackgroundAudioManager();
 
 Component({
   behaviors: [classicBeh],
@@ -9,7 +9,7 @@ Component({
    */
   properties: {
     src: String,
-    title: String
+    title: String,
   },
 
   /**
@@ -17,13 +17,13 @@ Component({
    */
   data: {
     playing: false,
-    pauseSrc: 'images/player@pause.png',
-    playSrc: 'images/player@play.png',
+    pauseSrc: "images/player@pause.png",
+    playSrc: "images/player@play.png",
   },
 
-  attached: function() {
-    this._recoverStatus()
-    this._monitorSwitch()
+  attached: function () {
+    this._recoverStatus();
+    this._monitorSwitch();
   },
 
   detached: function () {
@@ -38,44 +38,44 @@ Component({
       //图片切换
       if (!this.data.playing) {
         this.setData({
-          playing: true
-        })
-        mMgr.src = this.properties.src
-        mMgr.title = this.properties.title
+          playing: true,
+        });
+        mMgr.src = this.properties.src;
+        mMgr.title = this.properties.title;
       } else {
         this.setData({
-          playing: false
-        })
-        mMgr.pause()
+          playing: false,
+        });
+        mMgr.pause();
       }
     },
-    _recoverStatus: function() {
+    _recoverStatus: function () {
       if (mMgr.paused) {
         this.setData({
-          playing: false
-        })
-        return 
+          playing: false,
+        });
+        return;
       }
       if (mMgr.src === this.properties.src) {
         this.setData({
-          playing: true
-        })
+          playing: true,
+        });
       }
     },
 
     _monitorSwitch: function () {
       mMgr.onPlay(() => {
-        this._recoverStatus()
-      })
+        this._recoverStatus();
+      });
       mMgr.onPause(() => {
-        this._recoverStatus()
-      })
+        this._recoverStatus();
+      });
       mMgr.onStop(() => {
-        this._recoverStatus()
-      })
+        this._recoverStatus();
+      });
       mMgr.onEnded(() => {
-        this._recoverStatus()
-      })
-    }
-  }
-})
+        this._recoverStatus();
+      });
+    },
+  },
+});
