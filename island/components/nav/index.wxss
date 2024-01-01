@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    width: 600rpx;
+    height: 80rpx;
+    background-color: #f7f7f7;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon {
+    height:80rpx;
+    width:80rpx;
+}
