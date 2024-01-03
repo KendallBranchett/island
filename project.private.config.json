@@ -3,5 +3,18 @@
   "setting": {
     "urlCheck": false,
     "compileHotReLoad": false
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "book-detail",
+          "pathName": "pages/book-detail/book-detail",
+          "query": "bid=1120",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
   }
 }
