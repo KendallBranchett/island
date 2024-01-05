@@ -7,6 +7,7 @@ Page({
    */
   data: {
     books: [],
+    showSearching: false
   },
 
   /**
@@ -19,6 +20,18 @@ Page({
         books: res.data,
       })
     );
+  },
+
+  onSearch(event) {
+    this.setData({
+      showSearching: true
+    })
+  },
+
+  onCancel(event) {
+    this.setData({
+      showSearching: false
+    })
   },
 
   /**

@@ -20,31 +20,44 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    wx.showLoading()
     const bid = options.bid;
     const detail = bookModel.getDetail(bid);
     const comments = bookModel.getComments(bid);
     const likeStatus = bookModel.getLikeStatus(bid);
     console.log("this.data.book", this.data.book);
-    detail.then((res) => {
-      console.log("detail", res.data);
+
+    Promise.all([detail, comments, likeStatus]).then((res) => {
       this.setData({
-        book: res.data,
-        summary: res.data.summary,
-      });
-    });
-    comments.then((res) => {
-      console.log(res.data);
-      this.setData({
-        comments: res.data.comments,
-      });
-    });
-    likeStatus.then((res) => {
-      console.log(res.data);
-      this.setData({
-        likeStatus: res.data.like_status,
-        likeCount: res.data.fav_nums,
-      });
-    });
+        book: res[0].data,
+        summary: res[0].data.summary,
+        comments: res[1].data.comments,
+        likeStatus: res[2].data.like_status,
+        likeCount: res[2].data.fav_nums,
+      })
+      wx.hideLoading()
+    })
+
+    // detail.then((res) => {
+    //   console.log("detail", res.data);
+    //   this.setData({
+    //     book: res.data,
+    //     summary: res.data.summary,
+    //   });
+    // });
+    // comments.then((res) => {
+    //   console.log(res.data);
+    //   this.setData({
+    //     comments: res.data.comments,
+    //   });
+    // });
+    // likeStatus.then((res) => {
+    //   console.log(res.data);
+    //   this.setData({
+    //     likeStatus: res.data.like_status,
+    //     likeCount: res.data.fav_nums,
+    //   });
+    // });
   },
 
   onLike(event) {
