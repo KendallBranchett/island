@@ -27,6 +27,7 @@ Component({
     showSearching: false,
     q: "",
     loading: false,
+    loadingCenter: false
   },
 
   attached() {
@@ -48,7 +49,8 @@ Component({
       this.triggerEvent("cancel", {}, {});
     },
     onConfirm(event) {
-      this._showResult()
+      this._showResult();
+      this._showLoadingCenter()
       this.initialize();
       const word = event.detail.value || event.detail.text;
       bookModel.search(0, word).then((res) => {
@@ -59,10 +61,14 @@ Component({
           q: word,
         });
         keywordModel.addToHistory(word);
+       this._hideLoadingCenter()
       });
     },
     onDelete(event) {
       this._closeResult()
+      this.setData({
+        q:''
+      })
     },
     loadMore() {
       if (!this.data.q) {
@@ -101,10 +107,26 @@ Component({
       return this.data.loading ? true : false
     },
     _locked() {
-      this.data.loading = true;
+      this.setData({
+        loading: true
+      })
+      // this.data.loading = true;
     },
     _unLocked() {
-      this.data.loading = false;
+      this.setData({
+        loading: false
+      })
+      // this.data.loading = false;
+    },
+    _showLoadingCenter() {
+      this.setData({
+        loadingCenter: true
+      })
+    },
+    _hideLoadingCenter() {
+      this.setData({
+        loadingCenter: false
+      })
     }
   },
 });
