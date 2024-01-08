@@ -32,8 +32,8 @@
             </view>
         </view>
     </view>
-    <view wx:if="{{showSearching}}"class="book-container">
-        <block wx:for="dataArray" wx:key="id">
+    <view wx:if="{{showSearching}}"class="books-container">
+        <block wx:for="{{dataArray}}" wx:key="{{item.id}}">
             <v-book book="{{item}}" class="book"/>
         </block>
     </view>
