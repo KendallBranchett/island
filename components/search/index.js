@@ -47,11 +47,12 @@ Component({
   methods: {
     onCancel(event) {
       this.triggerEvent("cancel", {}, {});
+      this.initialize();
     },
     onConfirm(event) {
       this._showResult();
       this._showLoadingCenter()
-      this.initialize();
+      // this.initialize();
       const word = event.detail.value || event.detail.text;
       bookModel.search(0, word).then((res) => {
         this.setMoreData(res.data.books);
@@ -66,9 +67,7 @@ Component({
     },
     onDelete(event) {
       this._closeResult()
-      this.setData({
-        q:''
-      })
+      this.initialize();
     },
     loadMore() {
       if (!this.data.q) {
@@ -101,6 +100,7 @@ Component({
     _closeResult() {
       this.setData({
         showSearching: false,
+        q: ''
       });
     },
     _isLocked() {
