@@ -73,22 +73,22 @@ Component({
       if (!this.data.q) {
         return;
       }
-      if (this._isLocked()) {
+      if (this.isLocked()) {
         return;
       }
       // const length = this.data.dataArr.length;
       if (this.hasMore()) {
-        this._locked();
+        this.locked();
         bookModel.search(this.getCurrentStart(), this.data.q).then((res) => {
           this.setMoreData(res.data.books);
-          this._unLocked();
+          this.unLocked();
           // //合并两组数据
           // const tempArray = this.data.dataArr.concat(res.data.books);
           // this.setData({
           //   dataArr: tempArray,
           // })
         },() => {
-          this._unLocked()
+          this.unLocked()
         });
       }
     },
@@ -103,21 +103,7 @@ Component({
         q: ''
       });
     },
-    _isLocked() {
-      return this.data.loading ? true : false
-    },
-    _locked() {
-      this.setData({
-        loading: true
-      })
-      // this.data.loading = true;
-    },
-    _unLocked() {
-      this.setData({
-        loading: false
-      })
-      // this.data.loading = false;
-    },
+    
     _showLoadingCenter() {
       this.setData({
         loadingCenter: true
