@@ -47,6 +47,9 @@
     </view>
     <view class="like-container">
         <v-like bind:like="onLike" class="like" like="{{likeStatus}}" count="{{likeCount}}" />
+        <v-button class="share-btn" open-type="share">
+            <image class="share" slot="img" src="/images/icon/share.png" />
+        </v-button>
     </view>
 </view>
 <view class="posting-container" wx:if="{{showPosting}}">
