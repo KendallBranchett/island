@@ -1,5 +1,5 @@
 import { BookModel } from "../../models/book.js";
-import { random } from "../../util/commom.js"
+import { random } from "../../util/commom.js";
 
 const bookModel = new BookModel();
 Page({
@@ -9,31 +9,36 @@ Page({
   data: {
     books: [],
     showSearching: false,
-    more: ''
+    more: "",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
-    const hotList = bookModel.getHotList();
-    hotList.then((res) =>
-      this.setData({
-        books: res.data,
-      })
-    );
+  async onLoad(options) {
+    const { data } = await bookModel.getHotList();
+    this.setData({
+      books: data
+    });
+    // promise写法
+    // const hotList = bookModel.getHotList();
+    // hotList.then((res) =>
+    //   this.setData({
+    //     books: res.data,
+    //   })
+    // );
   },
 
   onSearch(event) {
     this.setData({
-      showSearching: true
-    })
+      showSearching: true,
+    });
   },
 
   onCancel(event) {
     this.setData({
-      showSearching: false
-    })
+      showSearching: false,
+    });
   },
 
   /**
@@ -66,8 +71,8 @@ Page({
    */
   onReachBottom() {
     this.setData({
-      more: random(16)
-    })
+      more: random(16),
+    });
   },
 
   /**

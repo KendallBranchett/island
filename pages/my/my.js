@@ -21,7 +21,8 @@ Page({
    */
   onLoad(options) {
     this.userAuthorized();
-    this.getMyFavor()
+    this.getMyBookCount();
+    this.getMyFavor();
   },
   onChooseAvatar(e) {
     const { avatarUrl } = e.detail 
@@ -40,12 +41,17 @@ Page({
       }
     })
   },
-  getMyBookCount() {
-    bookModel.getMyBookCount().then(res => {
-      this.setData({
-        bookCount: res.data.count
-      })
+  async getMyBookCount() {
+    const { data } = await bookModel.getMyBookCount()
+    this.setData({
+      bookCount: data.count
     })
+    //promise写法
+    // bookModel.getMyBookCount().then(res => {
+    //   this.setData({
+    //     bookCount: res.data.count
+    //   })
+    // })
   },
   getMyFavor() {
     classicModel.getMyFavor(res => {

@@ -30,15 +30,20 @@ Component({
     loadingCenter: false
   },
 
-  attached() {
+  async attached() {
     this.setData({
       historyWords: keywordModel.getHistory(),
     });
-    keywordModel.getHot().then((res) => {
-      this.setData({
-        hotWords: res.data.hot,
-      });
+    const { data } = await keywordModel.getHot();
+    this.setData({
+      hotWords: data.hot,
     });
+    //promise写法
+    // keywordModel.getHot().then((res) => {
+    //   this.setData({
+    //     hotWords: res.data.hot,
+    //   });
+    // });
   },
 
   /**
@@ -49,21 +54,31 @@ Component({
       this.triggerEvent("cancel", {}, {});
       this.initialize();
     },
-    onConfirm(event) {
+    async onConfirm(event) {
       this._showResult();
       this._showLoadingCenter()
       // this.initialize();
       const word = event.detail.value || event.detail.text;
-      bookModel.search(0, word).then((res) => {
-        this.setMoreData(res.data.books);
-        this.setTotal(res.data.total);
-        this.setData({
-          // dataArr: res.data.books,
-          q: word,
-        });
-        keywordModel.addToHistory(word);
-       this._hideLoadingCenter()
+      const { data } = await bookModel.search(0, word);
+      this.setMoreData(data.books);
+      this.setTotal(data.total);
+      this.setData({
+        // dataArr: res.data.books,
+        q: word,
       });
+      keywordModel.addToHistory(word);
+      this._hideLoadingCenter()
+      //promise写法
+      // bookModel.search(0, word).then((res) => {
+      //   this.setMoreData(res.data.books);
+      //   this.setTotal(res.data.total);
+      //   this.setData({
+      //     // dataArr: res.data.books,
+      //     q: word,
+      //   });
+      //   keywordModel.addToHistory(word);
+      //   this._hideLoadingCenter()
+      // });
     },
     onDelete(event) {
       this._closeResult()
